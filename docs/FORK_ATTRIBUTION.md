@@ -24,7 +24,8 @@ The host-side implementation was ported from [logabell/Vibepollo](https://github
 | **Apollo** | Lineage of the streaming host | [ClassicOldSong/Apollo](https://github.com/ClassicOldSong/Apollo) |
 | **Sunshine** | Original open-source game-streaming host | [LizardByte/Sunshine](https://github.com/LizardByte/Sunshine) |
 | **logabell/Vibepollo** | Source of the **microphone passthrough** host implementation used in this fork | [logabell/Vibepollo](https://github.com/logabell/Vibepollo) |
-| **Artemis / Moonlight Noir** | Android client ecosystem that supports mic redirection (client side) | [ClassicOldSong/moonlight-android](https://github.com/ClassicOldSong/moonlight-android) |
+| **logabell/moonlight-qt-mic** | **Paired Android client** used with this fork (mic passthrough on the phone) | [logabell/moonlight-qt-mic](https://github.com/logabell/moonlight-qt-mic) |
+| **Artemis / Moonlight Noir** | Related Android client ecosystem with mic support | [ClassicOldSong/moonlight-android](https://github.com/ClassicOldSong/moonlight-android) |
 | **Moonlight** | Client protocol lineage | [moonlight-stream/moonlight](https://github.com/moonlight-stream/moonlight) |
 
 This fork is **not** affiliated with, endorsed by, or maintained by Nonary, LizardByte, logabell, or the Moonlight project unless they say otherwise.

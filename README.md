@@ -5,7 +5,16 @@
 > **Change:** Adds **Android/client microphone passthrough** on Windows (from [logabell/Vibepollo](https://github.com/logabell/Vibepollo)) on top of [Nonary/Vibepollo](https://github.com/Nonary/Vibepollo).  
 > **How it was made:** AI-assisted development in **[Cursor](https://cursor.com)**. See [docs/FORK_ATTRIBUTION.md](docs/FORK_ATTRIBUTION.md), [docs/MIC_PORT.md](docs/MIC_PORT.md), [docs/remote_microphone.md](docs/remote_microphone.md), [docs/BUILD_INSTALLER.md](docs/BUILD_INSTALLER.md).
 
-Enable **`stream_mic`** in Audio/Video settings, install Steam Streaming Microphone drivers, and use a mic-capable Moonlight/Artemis Android client. Host apps should use **Microphone (Steam Streaming Microphone)** as input.
+Enable **`stream_mic`** in Audio/Video settings, install Steam Streaming Microphone drivers, and pair with **[logabell/moonlight-qt-mic](https://github.com/logabell/moonlight-qt-mic)** on Android (mic-capable Moonlight client). Host apps should use **Microphone (Steam Streaming Microphone)** as input.
+
+## Paired Android client
+
+| Component | Repository |
+|-----------|------------|
+| **Host (this fork)** | [heilmansamuelmax-netizen/Vibepollo-android-mic](https://github.com/heilmansamuelmax-netizen/Vibepollo-android-mic) |
+| **Client (Android)** | [logabell/moonlight-qt-mic](https://github.com/logabell/moonlight-qt-mic) |
+
+Install the client APK from logabell’s releases (or build from source), pair to this host like normal Moonlight, and enable microphone in the client when streaming.
 
 ## Quick links (this fork)
 
