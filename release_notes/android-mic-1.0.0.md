@@ -10,6 +10,14 @@ First public release of the **mic-only** fork installer.
 
 Run as **Administrator**. Unsigned — SmartScreen may warn.
 
+## Required client
+
+**[logabell/moonlight-qt-mic](https://github.com/logabell/moonlight-qt-mic)** on Android TV — **required**.
+
+Do **not** use Artemis, stock Moonlight, or other forks for mic passthrough with this release.
+
+**Tested hardware:** **2019 NVIDIA Shield TV Pro** only. Other Android TV boxes and clients are untested.
+
 ## What is included
 
 - Full Vibepollo host (1.17.0-beta.8 base): service, virtual display, web UI, Playnite
@@ -19,9 +27,11 @@ Run as **Administrator**. Unsigned — SmartScreen may warn.
 ## Quick start
 
 1. Install `VibepolloSetup.exe` on your Windows streaming PC.
-2. Pair **Artemis** ([ClassicOldSong/moonlight-android](https://github.com/ClassicOldSong/moonlight-android)) on Shield / Android TV.
+2. Install **moonlight-qt-mic** on the **2019 Shield TV Pro** and pair to the host.
 3. Web UI -> **Audio/Video** -> enable **Microphone Passthrough**.
 4. Use **Microphone (Steam Streaming Microphone)** in Discord/games on the host.
+
+USB wireless headset recommended on Shield — see [remote_microphone.md](../docs/remote_microphone.md#nvidia-shield-android-tv-client).
 
 ## Credits
 

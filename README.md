@@ -6,7 +6,10 @@
 > **Extra vs stock Vibepollo:** **Android/client microphone passthrough** (from [logabell/Vibepollo](https://github.com/logabell/Vibepollo)).  
 > **How it was made:** AI-assisted development in **[Cursor](https://cursor.com)**. See [docs/FORK_ATTRIBUTION.md](docs/FORK_ATTRIBUTION.md), [docs/MIC_PORT.md](docs/MIC_PORT.md), [docs/remote_microphone.md](docs/remote_microphone.md), [docs/BUILD_INSTALLER.md](docs/BUILD_INSTALLER.md).
 
-Enable **`stream_mic`** in Audio/Video settings, install Steam Streaming Microphone drivers, and pair with **Artemis** on Shield or a mic-capable Moonlight client. Host apps should use **Microphone (Steam Streaming Microphone)** as input.
+Enable **`stream_mic`** in Audio/Video settings, install Steam Streaming Microphone drivers, and pair with **[logabell/moonlight-qt-mic](https://github.com/logabell/moonlight-qt-mic)** on your Android TV client. Host apps should use **Microphone (Steam Streaming Microphone)** as input.
+
+> **Required client:** [logabell/moonlight-qt-mic](https://github.com/logabell/moonlight-qt-mic) on Android TV — not Artemis / stock Moonlight.  
+> **Tested hardware:** **2019 NVIDIA Shield TV Pro** only. Other Android TV devices or clients are untested.
 
 ## Choose your install
 
@@ -16,16 +19,16 @@ Enable **`stream_mic`** in Audio/Video settings, install Steam Streaming Microph
 | Official Vibepollo (signed) | [Nonary/Vibepollo](https://github.com/Nonary/Vibepollo) |
 | **This fork (full `VibepolloSetup.exe`)** | [Releases](https://github.com/heilmansamuelmax-netizen/Vibepollo-android-mic/releases) — mic passthrough |
 
-## Paired Android client
+## Paired Android client (required)
 
 | Component | Repository |
 |-----------|------------|
 | **Host (this fork)** | [heilmansamuelmax-netizen/Vibepollo-android-mic](https://github.com/heilmansamuelmax-netizen/Vibepollo-android-mic) |
-| **Client (Shield / Android TV)** | [ClassicOldSong/moonlight-android](https://github.com/ClassicOldSong/moonlight-android) (Artemis) or [logabell/moonlight-qt-mic](https://github.com/logabell/moonlight-qt-mic) |
+| **Client (Android TV)** | **[logabell/moonlight-qt-mic](https://github.com/logabell/moonlight-qt-mic)** — required |
 
-Install the client APK from logabell’s releases (or build from source), pair to this host like normal Moonlight, and enable microphone in the client when streaming.
+Install the **moonlight-qt-mic** APK from [logabell’s releases](https://github.com/logabell/moonlight-qt-mic/releases) (or build from source), pair to this host like normal Moonlight, and enable microphone in the client when streaming.
 
-**NVIDIA Shield TV Pro (2019):** USB wireless headsets are the practical choice; Bluetooth mic on Shield may not work, and Bluetooth audio quality is generally poor anyway—see [remote_microphone.md](docs/remote_microphone.md#nvidia-shield-android-tv-client).
+**Tested only on:** **2019 NVIDIA Shield TV Pro**. Mic passthrough has not been verified on other Android TV boxes, phones, or Moonlight forks (including Artemis).
 
 ## Quick links (this fork)
 

@@ -40,7 +40,9 @@ These match [logabell/Vibepollo](https://github.com/logabell/Vibepollo) / [Class
 
 ## Client requirement
 
-The **client** must support sending mic packets. The setup tested for this fork uses **[logabell/moonlight-qt-mic](https://github.com/logabell/moonlight-qt-mic)** on Android. This repo only changes the **host**.
+The **client** must be **[logabell/moonlight-qt-mic](https://github.com/logabell/moonlight-qt-mic)** on Android TV. Artemis and stock Moonlight are not supported for this mic release. This repo only changes the **host**.
+
+**Tested hardware:** **2019 NVIDIA Shield TV Pro** only.
 
 ## Build verification
 

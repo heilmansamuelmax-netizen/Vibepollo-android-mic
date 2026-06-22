@@ -4,7 +4,9 @@ This fork adds a working host-side remote microphone path for Vibepollo, focused
 
 ## Overview
 
-**Paired client:** [logabell/moonlight-qt-mic](https://github.com/logabell/moonlight-qt-mic) (Android Moonlight fork with microphone passthrough). This host fork does not change the client—you need a mic-capable client like that one.
+**Paired client (required):** [logabell/moonlight-qt-mic](https://github.com/logabell/moonlight-qt-mic) on Android TV. This host fork does not change the client — you must use moonlight-qt-mic (not Artemis or stock Moonlight).
+
+**Tested hardware:** **2019 NVIDIA Shield TV Pro** only.
 
 The microphone path is:
 
@@ -42,7 +44,7 @@ The working implementation in this fork includes:
   - **Speakers (Steam Streaming Microphone)** — where Vibepollo *writes* decoded phone audio
   - **Microphone (Steam Streaming Microphone)** — what Discord, Steam, games, etc. must *record from*
 - Enable `stream_mic` in Vibepollo.
-- Install and pair **[logabell/moonlight-qt-mic](https://github.com/logabell/moonlight-qt-mic)** on Android (or another client that sends encrypted mic packets the same way).
+- Install and pair **[logabell/moonlight-qt-mic](https://github.com/logabell/moonlight-qt-mic)** on Android TV (required for this fork).
 
 ### Discord, Steam, and games
 
@@ -60,9 +62,9 @@ Quick sanity check before Discord:
 
 If Voice Recorder works but Discord does not, Discord’s input device is wrong. If Voice Recorder is flat, the host path (drivers, `stream_mic`, or client encryption) is still broken.
 
-## NVIDIA Shield (Android TV client)
+## NVIDIA Shield TV Pro (2019) — tested client setup
 
-A working client setup in this fork’s lineage pairs the host with **[logabell/moonlight-qt-mic](https://github.com/logabell/moonlight-qt-mic)** on the client—for example a **2019 NVIDIA Shield TV Pro** with a **USB wireless headset** (dongle or base connected to the Shield’s USB port).
+This fork's mic release was **only tested** on a **2019 NVIDIA Shield TV Pro** running **[logabell/moonlight-qt-mic](https://github.com/logabell/moonlight-qt-mic)** with a **USB wireless headset** (dongle or base connected to the Shield's USB port). Other Android TV devices, clients, and Shield models are **untested**.
 
 - **USB wireless headset (recommended):** Let Android TV see the headset as the recording device. The wireless link is between the headset and its USB dongle; the Shield only needs to capture from that USB audio device.
 - **Bluetooth headset:** Mic passthrough **may not work** on Shield over Bluetooth—Android TV and many BT headsets do not expose a reliable mic path to sideloaded streaming apps. This fork does not fix Shield-side Bluetooth routing.
