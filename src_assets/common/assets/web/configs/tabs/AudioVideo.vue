@@ -255,6 +255,29 @@ function selectVirtualDisplayLayout(v: unknown) {
 
     <ConfigFieldRenderer setting-key="stream_audio" v-model="config.stream_audio" class="mb-3" />
 
+    <ConfigFieldRenderer setting-key="stream_mic" v-model="config.stream_mic" class="mb-3" />
+
+    <div class="mb-3" v-if="platform === 'windows'">
+      <label class="form-label">{{ $t('config.mic_backend') }}</label>
+      <input type="text"
+             class="form-control"
+             :value="$t('config.mic_backend_apollo_virtual_mic')"
+             disabled />
+      <div class="form-text pre-wrap">{{ $t('config.mic_backend_desc_windows') }}</div>
+    </div>
+
+    <div class="mb-3" v-if="platform !== 'windows'">
+      <label for="mic_device" class="form-label">{{ $t('config.mic_device') }}</label>
+      <input type="text"
+             class="form-control"
+             id="mic_device"
+             :placeholder="$tp('config.mic_device_placeholder', 'sunshine-mic')"
+             v-model="config.mic_device" />
+      <div class="form-text pre-wrap">
+        {{ $tp('config.mic_device_desc') }}
+      </div>
+    </div>
+
     <ConfigFieldRenderer
       v-if="config.stream_audio === 'enabled'"
       setting-key="keep_sink_default"

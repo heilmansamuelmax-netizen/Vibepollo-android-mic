@@ -1,3 +1,31 @@
+# Vibepollo (Android mic fork)
+
+> **This repository:** [heilmansamuelmax-netizen/Vibepollo-android-mic](https://github.com/heilmansamuelmax-netizen/Vibepollo-android-mic)  
+> **Maintainer:** Samuel Heilman — auto mechanic, not a software engineer.  
+> **Change:** Adds **Android/client microphone passthrough** on Windows (from [logabell/Vibepollo](https://github.com/logabell/Vibepollo)) on top of [Nonary/Vibepollo](https://github.com/Nonary/Vibepollo).  
+> **How it was made:** AI-assisted development in **[Cursor](https://cursor.com)**. See [docs/FORK_ATTRIBUTION.md](docs/FORK_ATTRIBUTION.md), [docs/MIC_PORT.md](docs/MIC_PORT.md), [docs/remote_microphone.md](docs/remote_microphone.md), [docs/BUILD_INSTALLER.md](docs/BUILD_INSTALLER.md).
+
+Enable **`stream_mic`** in Audio/Video settings, install Steam Streaming Microphone drivers, and use a mic-capable Moonlight/Artemis Android client. Host apps should use **Microphone (Steam Streaming Microphone)** as input.
+
+## Quick links (this fork)
+
+| Doc | Purpose |
+|-----|---------|
+| [FORK_ATTRIBUTION.md](docs/FORK_ATTRIBUTION.md) | Credits, AI/Cursor disclosure, maintainer background |
+| [MIC_PORT.md](docs/MIC_PORT.md) | What changed in the mic port |
+| [remote_microphone.md](docs/remote_microphone.md) | How to use remote mic |
+| [BUILD_INSTALLER.md](docs/BUILD_INSTALLER.md) | Build MSI + `VibepolloSetup.exe` like upstream |
+
+## Build this fork (Windows installer)
+
+1. MSYS2 **UCRT64**, submodules, WiX 3.x, .NET SDK — see [BUILD_INSTALLER.md](docs/BUILD_INSTALLER.md).
+2. Download WebRTC: `.\scripts\download_webrtc_release.ps1`
+3. Configure and build in UCRT64, then `package_msi` and `build_bootstrapper.ps1`.
+
+Local installers are **unsigned** (SmartScreen may warn). Official [Nonary/Vibepollo](https://github.com/Nonary/Vibepollo) releases are code-signed.
+
+---
+
 # Vibepollo
 
 ## What is Vibepollo?

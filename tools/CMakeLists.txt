@@ -22,6 +22,7 @@ add_executable(dxgi-info dxgi.cpp ${TOOL_SOURCES})
 target_link_libraries(dxgi-info
         ${Boost_LIBRARIES}
         ${CMAKE_THREAD_LIBS_INIT}
+        nlohmann_json::nlohmann_json
         dxgi
         ${PLATFORM_LIBRARIES}
 )
@@ -31,6 +32,7 @@ add_executable(audio-info audio.cpp ${TOOL_SOURCES})
 target_link_libraries(audio-info
         ${Boost_LIBRARIES}
         ${CMAKE_THREAD_LIBS_INIT}
+        nlohmann_json::nlohmann_json
         ksuser
         ${PLATFORM_LIBRARIES}
 )
@@ -97,6 +99,7 @@ target_compile_definitions(sunshine_wgc_capture PRIVATE
 target_link_libraries(sunshine_wgc_capture
         ${Boost_LIBRARIES}
         ${CMAKE_THREAD_LIBS_INIT}
+        nlohmann_json::nlohmann_json
         d3d11
         dxgi
         ole32
@@ -134,6 +137,7 @@ target_include_directories(sunshine_display_helper PRIVATE ${CMAKE_SOURCE_DIR}/t
 target_link_libraries(sunshine_display_helper
         ${Boost_LIBRARIES}
         ${CMAKE_THREAD_LIBS_INIT}
+        nlohmann_json::nlohmann_json
         libdisplaydevice::display_device
         user32
         wtsapi32

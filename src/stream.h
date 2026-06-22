@@ -31,6 +31,7 @@ namespace stream {
   constexpr auto VIDEO_STREAM_PORT = 9;
   constexpr auto CONTROL_PORT = 10;
   constexpr auto AUDIO_STREAM_PORT = 11;
+  constexpr auto MIC_STREAM_PORT = 12;
 
   constexpr std::string_view video_format_name(int video_format) {
     switch (video_format) {
@@ -99,6 +100,7 @@ namespace stream {
 
   namespace session {
     extern std::atomic_uint running_sessions;
+    extern std::atomic_uint running_mic_sessions;
 
     enum class state_e : int {
       STOPPED,  ///< The session is stopped

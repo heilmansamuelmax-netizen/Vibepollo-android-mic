@@ -55,6 +55,7 @@ namespace rtsp_stream {
 
     bool input_only;
     bool host_audio;
+    bool enable_mic;
     int width;
     int height;
     int fps;
