@@ -637,6 +637,10 @@ namespace platf {
 
     virtual std::unique_ptr<mic_t> microphone(const std::uint8_t *mapping, int channels, std::uint32_t sample_rate, std::uint32_t frame_size, bool continuous, bool host_audio_enabled) = 0;
 
+    virtual int init_mic_redirect_device() = 0;
+    virtual void release_mic_redirect_device() = 0;
+    virtual int write_mic_data(const char *data, std::size_t len, std::uint16_t sequence_number, std::uint32_t timestamp) = 0;
+
     /**
      * @brief Check if the audio sink is available in the system.
      * @param sink Sink to be checked.

@@ -34,6 +34,8 @@ extern "C" {
   // clang-format on
 }
 
+#include "mic_protocol.h"
+
 // local includes
 #include "config.h"
 #include "crypto.h"
@@ -430,6 +432,14 @@ namespace stream {
     AUDIO_FEC_HEADER fecHeader;
   };
 
+  struct mic_packet_header_t {
+    std::uint8_t flags;
+    std::uint8_t packetType;
+    boost::endian::little_uint16_at sequenceNumber;
+    boost::endian::little_uint32_at timestamp;
+    boost::endian::little_uint32_at ssrc;
+  };
+
 #pragma pack(pop)
 
   constexpr std::size_t round_to_pkcs7_padded(std::size_t size) {
@@ -533,6 +543,7 @@ namespace stream {
     std::atomic<std::uint64_t> audio_recv_count {0};
 
     std::thread recv_thread;
+    std::thread mic_thread;
     std::thread video_thread;
     std::thread audio_thread;
     std::thread control_thread;
@@ -541,6 +552,7 @@ namespace stream {
 
     udp::socket video_sock {io_context};
     udp::socket audio_sock {io_context};
+    udp::socket mic_sock {io_context};
 
     control_server_t control_server;
   };
@@ -599,6 +611,8 @@ namespace stream {
 
       audio_fec_packet_t fec_packet;
       std::unique_ptr<platf::deinit_t> qos;
+      bool enable_mic;
+      bool first_mic_packet_logged;
     } audio;
 
     struct {
@@ -1775,6 +1789,100 @@ namespace stream {
     server->flush();
   }
 
+  session_t *find_mic_session(broadcast_ctx_t &ctx, const udp::endpoint &peer) {
+    auto lg = ctx.control_server._sessions.lock();
+    for (auto *stream_session : *ctx.control_server._sessions) {
+      if (!stream_session->audio.enable_mic) {
+        continue;
+      }
+
+      if (stream_session->state.load(std::memory_order_relaxed) != stream::session::state_e::RUNNING) {
+        continue;
+      }
+
+      if (stream_session->audio.peer.address() == peer.address()) {
+        return stream_session;
+      }
+    }
+
+    return nullptr;
+  }
+
+  void micRecvThread(broadcast_ctx_t &ctx) {
+    auto broadcast_shutdown_event = mail::man->event<bool>(mail::broadcast_shutdown);
+    std::array<char, 2048> buf {};
+    udp::endpoint peer;
+
+    while (!broadcast_shutdown_event->peek()) {
+      boost::system::error_code ec;
+      auto bytes = ctx.mic_sock.receive_from(asio::buffer(buf), peer, 0, ec);
+
+      if (broadcast_shutdown_event->peek()) {
+        break;
+      }
+
+      if (ec) {
+        if (ec == boost::asio::error::operation_aborted ||
+            ec == boost::asio::error::bad_descriptor ||
+            ec == boost::asio::error::connection_refused ||
+            ec == boost::asio::error::connection_reset) {
+          continue;
+        }
+
+        BOOST_LOG(debug) << "Couldn't receive microphone packet: "sv << ec.message();
+        continue;
+      }
+
+      if (bytes <= sizeof(mic_packet_header_t)) {
+        continue;
+      }
+
+      auto *header = reinterpret_cast<mic_packet_header_t *>(buf.data());
+      if (header->packetType != MIC_PACKET_TYPE_OPUS || header->ssrc != MIC_PACKET_MAGIC) {
+        continue;
+      }
+
+      auto *session = find_mic_session(ctx, peer);
+      if (session == nullptr) {
+        continue;
+      }
+
+      const auto sequence_number = static_cast<std::uint16_t>(header->sequenceNumber);
+      const auto timestamp = static_cast<std::uint32_t>(header->timestamp);
+      const auto payload_len = bytes - sizeof(mic_packet_header_t);
+      const auto *payload = reinterpret_cast<const std::uint8_t *>(buf.data() + sizeof(mic_packet_header_t));
+      audio::mic_debug_on_packet_received(sequence_number, payload_len);
+
+      if (!session->audio.first_mic_packet_logged) {
+        session->audio.first_mic_packet_logged = true;
+        BOOST_LOG(info) << "Received first client microphone packet for ["sv << session->device_name
+                        << "] from ["sv << peer.address().to_string() << ':' << peer.port()
+                        << "] with payload "sv << payload_len << " bytes";
+      }
+
+      std::vector<std::uint8_t> decrypted_payload;
+      if (session->config.encryptionFlagsEnabled & SS_ENC_MICROPHONE) {
+        crypto::aes_t iv(16);
+        *(std::uint32_t *) iv.data() = util::endian::big<std::uint32_t>(session->audio.avRiKeyId + sequence_number);
+
+        if (session->audio.cipher.decrypt(std::string_view {reinterpret_cast<const char *>(payload), payload_len}, decrypted_payload, &iv) != 0) {
+          BOOST_LOG(warning) << "Dropping encrypted microphone packet with invalid payload for ["sv << session->device_name
+                             << "] sequence "sv << sequence_number;
+          audio::mic_debug_on_packet_decrypt_error(sequence_number, "Encrypted microphone packet could not be decrypted");
+          continue;
+        }
+
+        payload = decrypted_payload.data();
+      }
+
+      const auto decoded_payload_len = decrypted_payload.empty() ? payload_len : decrypted_payload.size();
+      if (audio::write_mic_data(reinterpret_cast<const char *>(payload), decoded_payload_len, sequence_number, timestamp) < 0) {
+        BOOST_LOG(debug) << "Dropping microphone packet for ["sv << session->device_name << ']';
+        audio::mic_debug_on_packet_dropped(sequence_number, "Host microphone render path rejected the packet");
+      }
+    }
+  }
+
   void recvThread(broadcast_ctx_t &ctx) {
     std::map<av_session_id_t, message_queue_t> peer_to_video_session;
     std::map<av_session_id_t, message_queue_t> peer_to_audio_session;
@@ -2396,6 +2504,7 @@ namespace stream {
     auto control_port = net::map_port(CONTROL_PORT);
     auto video_port = net::map_port(VIDEO_STREAM_PORT);
     auto audio_port = net::map_port(AUDIO_STREAM_PORT);
+    auto mic_port = net::map_port(MIC_STREAM_PORT);
 
     // Parse the bind address up front so the socket protocol can follow the
     // actual endpoint family. An IPv4 bind_address must open IPv4 sockets even
@@ -2450,6 +2559,20 @@ namespace stream {
       return -1;
     }
 
+    if (config::audio.stream_mic) {
+      ctx.mic_sock.open(protocol, ec);
+      if (ec) {
+        BOOST_LOG(fatal) << "Couldn't open socket for Microphone server: "sv << ec.message();
+        return -1;
+      }
+
+      ctx.mic_sock.bind(udp::endpoint(bind_addr, mic_port), ec);
+      if (ec) {
+        BOOST_LOG(fatal) << "Couldn't bind Microphone server to port ["sv << mic_port << "]: "sv << ec.message();
+        return -1;
+      }
+    }
+
     ctx.message_queue_queue = std::make_shared<message_queue_queue_t::element_type>(30);
 
     // Restart the io_context in case it was stopped from a previous session.
@@ -2461,6 +2584,9 @@ namespace stream {
     ctx.control_thread = std::thread {controlBroadcastThread, &ctx.control_server};
 
     ctx.recv_thread = std::thread {recvThread, std::ref(ctx)};
+    if (config::audio.stream_mic) {
+      ctx.mic_thread = std::thread {micRecvThread, std::ref(ctx)};
+    }
 
     return 0;
   }
@@ -2482,6 +2608,9 @@ namespace stream {
 
     ctx.video_sock.close();
     ctx.audio_sock.close();
+    if (ctx.mic_sock.is_open()) {
+      ctx.mic_sock.close();
+    }
 
     video_packets.reset();
     audio_packets.reset();
@@ -2494,6 +2623,10 @@ namespace stream {
     ctx.audio_thread.join();
     BOOST_LOG(debug) << "Waiting for main control thread to end..."sv;
     ctx.control_thread.join();
+    if (ctx.mic_thread.joinable()) {
+      BOOST_LOG(debug) << "Waiting for main microphone thread to end..."sv;
+      ctx.mic_thread.join();
+    }
     BOOST_LOG(debug) << "All broadcasting threads ended"sv;
 
     broadcast_shutdown_event->reset();
@@ -2643,6 +2776,7 @@ namespace stream {
 
   namespace session {
     std::atomic_uint running_sessions;
+    std::atomic_uint running_mic_sessions;
     std::atomic_uint teardown_sessions;
     std::atomic_uint cleanup_reservations;
     bool shared_platform_started;
@@ -2953,6 +3087,11 @@ namespace stream {
         exec_thread.detach();
       }
 
+      if (session.audio.enable_mic && running_mic_sessions.fetch_sub(1, std::memory_order_acq_rel) == 1) {
+        audio::release_mic_redirect_device();
+        audio::mic_debug_on_session_stop("Remote microphone session ended");
+      }
+
       // Serialize only the ownership transition and shared cleanup. Blocking
       // thread joins above must remain outside the lifecycle gate.
       std::unique_lock<std::mutex> lifecycle_lock(nvhttp::stream_lifecycle_mutex());
@@ -3061,6 +3200,27 @@ namespace stream {
 
       session.audio.peer.address(addr);
       session.audio.peer.port(0);
+
+      if (session.audio.enable_mic) {
+        audio::mic_debug_on_session_start(session.device_name, (session.config.encryptionFlagsEnabled & SS_ENC_MICROPHONE) != 0);
+        if (running_mic_sessions.fetch_add(1, std::memory_order_acq_rel) == 0) {
+          if (audio::init_mic_redirect_device() != 0) {
+            running_mic_sessions.fetch_sub(1, std::memory_order_acq_rel);
+            session.audio.enable_mic = false;
+            audio::mic_debug_on_backend_error("Microphone backend could not initialize on the host");
+            audio::mic_debug_on_session_stop("Microphone redirection requested, but the host backend could not initialize");
+            BOOST_LOG(warning) << "Client microphone redirection is unavailable for ["sv << session.device_name << ']';
+          } else {
+            BOOST_LOG(info) << "Client microphone redirection requested for ["sv << session.device_name
+                            << "] with encryption "sv
+                            << ((session.config.encryptionFlagsEnabled & SS_ENC_MICROPHONE) ? "enabled"sv : "disabled"sv);
+          }
+        } else {
+          BOOST_LOG(info) << "Client microphone redirection requested for ["sv << session.device_name
+                          << "] with encryption "sv
+                          << ((session.config.encryptionFlagsEnabled & SS_ENC_MICROPHONE) ? "enabled"sv : "disabled"sv);
+        }
+      }
 
       session.pingTimeout = std::chrono::steady_clock::now() + config::stream.ping_timeout;
 
@@ -3290,6 +3450,8 @@ namespace stream {
       session->audio.avRiKeyId = util::endian::big(*(std::uint32_t *) launch_session.iv.data());
       session->audio.sequenceNumber = 0;
       session->audio.timestamp = 0;
+      session->audio.enable_mic = launch_session.enable_mic && config::audio.stream_mic;
+      session->audio.first_mic_packet_logged = false;
 
       session->control.peer = nullptr;
       session->state.store(state_e::STOPPED, std::memory_order_relaxed);

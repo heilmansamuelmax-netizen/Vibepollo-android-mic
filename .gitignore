@@ -73,3 +73,11 @@ AGENTS.md
 test_sunshine.log
 vibeshine_state.json
 .claude/
+
+# Local build/download artifacts (mic fork)
+libvirtualdisplay-release/
+build-output*.log
+build-output-full.log
+build-rebuild.log
+package-msi.log
+mic-files.txt
