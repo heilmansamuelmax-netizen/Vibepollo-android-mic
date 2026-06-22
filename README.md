@@ -26,6 +26,7 @@ Install the client APK from logabell’s releases (or build from source), pair t
 | [MIC_PORT.md](docs/MIC_PORT.md) | What changed in the mic port |
 | [remote_microphone.md](docs/remote_microphone.md) | How to use remote mic |
 | [BUILD_INSTALLER.md](docs/BUILD_INSTALLER.md) | Build MSI + `VibepolloSetup.exe` like upstream |
+| [RELEASE.md](docs/RELEASE.md) | Download pre-built `VibepolloSetup.exe` from GitHub Releases |
 
 ## Build this fork (Windows installer)
 
