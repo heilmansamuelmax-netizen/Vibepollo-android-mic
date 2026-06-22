@@ -12,9 +12,13 @@ Run as **Administrator**. Unsigned — SmartScreen may warn.
 
 ## Required client
 
-**[logabell/moonlight-qt-mic](https://github.com/logabell/moonlight-qt-mic)** on Android TV — **required**.
+**[logabell/moonlight-android v20.2.6-mic-test2](https://github.com/logabell/moonlight-android/releases/tag/v20.2.6-mic-test2)** on Android TV — **required**.
 
-Do **not** use Artemis, stock Moonlight, or other forks for mic passthrough with this release.
+| Shield (arm64) | Value |
+|----------------|-------|
+| APK | `app-nonRoot_game-arm64-v8a-debug.apk` |
+| App | Artemis-mic (`com.limelight.noirdebug`, v20.2.6) |
+| SHA-256 | `78CE2B4F95D8FB4692A9D17F871BE5B7A8283424BE49F76E6B08ACBA4F472854` |
 
 **Tested hardware:** **2019 NVIDIA Shield TV Pro** only. Other Android TV boxes and clients are untested.
 
@@ -27,11 +31,11 @@ Do **not** use Artemis, stock Moonlight, or other forks for mic passthrough with
 ## Quick start
 
 1. Install `VibepolloSetup.exe` on your Windows streaming PC.
-2. Install **moonlight-qt-mic** on the **2019 Shield TV Pro** and pair to the host.
+2. Sideload **`app-nonRoot_game-arm64-v8a-debug.apk`** from [v20.2.6-mic-test2](https://github.com/logabell/moonlight-android/releases/tag/v20.2.6-mic-test2) on the **2019 Shield TV Pro**, launch **Artemis-mic**, and pair to the host.
 3. Web UI -> **Audio/Video** -> enable **Microphone Passthrough**.
 4. Use **Microphone (Steam Streaming Microphone)** in Discord/games on the host.
 
-USB wireless headset recommended on Shield — see [remote_microphone.md](../docs/remote_microphone.md#nvidia-shield-android-tv-client).
+USB wireless headset recommended on Shield — see [remote_microphone.md](../docs/remote_microphone.md#nvidia-shield-tv-pro-2019-tested-client-setup).
 
 ## Credits
 

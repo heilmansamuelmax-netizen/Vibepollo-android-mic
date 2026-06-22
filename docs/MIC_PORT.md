@@ -40,7 +40,7 @@ These match [logabell/Vibepollo](https://github.com/logabell/Vibepollo) / [Class
 
 ## Client requirement
 
-The **client** must be **[logabell/moonlight-qt-mic](https://github.com/logabell/moonlight-qt-mic)** on Android TV. Artemis and stock Moonlight are not supported for this mic release. This repo only changes the **host**.
+The **client** must be **[logabell/moonlight-android](https://github.com/logabell/moonlight-android)** release **[v20.2.6-mic-test2](https://github.com/logabell/moonlight-android/releases/tag/v20.2.6-mic-test2)** on Android TV — install **`app-nonRoot_game-arm64-v8a-debug.apk`** (**Artemis-mic**, `com.limelight.noirdebug`). Stock Moonlight and other builds are not supported for this mic release. This repo only changes the **host**.
 
 **Tested hardware:** **2019 NVIDIA Shield TV Pro** only.
 
