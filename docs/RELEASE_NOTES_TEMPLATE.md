@@ -19,7 +19,13 @@ Run as **Administrator**. SmartScreen may warn on unsigned builds.
 
 ## Required client
 
-**[logabell/moonlight-qt-mic](https://github.com/logabell/moonlight-qt-mic)** on Android TV — **required**. Not Artemis or stock Moonlight.
+**[logabell/moonlight-android v20.2.6-mic-test2](https://github.com/logabell/moonlight-android/releases/tag/v20.2.6-mic-test2)** on Android TV — **required**.
+
+| Shield (arm64) | Value |
+|----------------|-------|
+| APK | `app-nonRoot_game-arm64-v8a-debug.apk` |
+| App | Artemis-mic (`com.limelight.noirdebug`, v20.2.6) |
+| SHA-256 | `78CE2B4F95D8FB4692A9D17F871BE5B7A8283424BE49F76E6B08ACBA4F472854` |
 
 **Tested hardware:** **2019 NVIDIA Shield TV Pro** only.
 
@@ -35,7 +41,7 @@ Run as **Administrator**. SmartScreen may warn on unsigned builds.
 
 ## After install
 
-1. Install **moonlight-qt-mic** on the Shield and pair to this host.
+1. Sideload **`app-nonRoot_game-arm64-v8a-debug.apk`** from [v20.2.6-mic-test2](https://github.com/logabell/moonlight-android/releases/tag/v20.2.6-mic-test2) on the Shield and pair to this host.
 2. Web UI -> **Audio/Video** -> enable **Microphone Passthrough**.
 3. Host apps: **Microphone (Steam Streaming Microphone)**.
 
