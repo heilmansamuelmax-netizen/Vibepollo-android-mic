@@ -17,6 +17,14 @@ Run as **Administrator**. SmartScreen may warn on unsigned builds.
 
 ---
 
+## Required client
+
+**[logabell/moonlight-qt-mic](https://github.com/logabell/moonlight-qt-mic)** on Android TV — **required**. Not Artemis or stock Moonlight.
+
+**Tested hardware:** **2019 NVIDIA Shield TV Pro** only.
+
+---
+
 ## What is in this build
 
 - Full Vibepollo host based on **1.17.0-beta.8** (service, virtual display, web UI, Playnite)
@@ -27,8 +35,8 @@ Run as **Administrator**. SmartScreen may warn on unsigned builds.
 
 ## After install
 
-1. Pair **Artemis** on Shield / Android TV ([ClassicOldSong/moonlight-android](https://github.com/ClassicOldSong/moonlight-android)).
-2. Web UI -> **Audio/Video** -> enable **Microphone Passthrough** (if not already on).
+1. Install **moonlight-qt-mic** on the Shield and pair to this host.
+2. Web UI -> **Audio/Video** -> enable **Microphone Passthrough**.
 3. Host apps: **Microphone (Steam Streaming Microphone)**.
 
 ---

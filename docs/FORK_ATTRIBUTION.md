@@ -6,7 +6,7 @@ This document describes what this repository is, who maintains it, where the cod
 
 **Samuel Heilman** ([@heilmansamuelmax-netizen](https://github.com/heilmansamuelmax-netizen))
 
-I am an **auto mechanic**, not a professional software engineer. I forked Vibepollo because I wanted **one feature**: the ability to use my **Android phone's microphone** while streaming to my Windows PC through Moonlight/Artemis-style clients. I did not set out to rewrite Vibepollo or compete with its original authors.
+I am an **auto mechanic**, not a professional software engineer. I forked Vibepollo because I wanted **one feature**: the ability to use my **Android TV client's microphone** while streaming to my Windows PC through **[logabell/moonlight-qt-mic](https://github.com/logabell/moonlight-qt-mic)**. I did not set out to rewrite Vibepollo or compete with its original authors.
 
 If something in this fork is wrong, confusing, or breaks your setup, that reflects my limited background and the AI-assisted workflow described below—not the quality of upstream Vibepollo.
 
@@ -24,8 +24,7 @@ The host-side implementation was ported from [logabell/Vibepollo](https://github
 | **Apollo** | Lineage of the streaming host | [ClassicOldSong/Apollo](https://github.com/ClassicOldSong/Apollo) |
 | **Sunshine** | Original open-source game-streaming host | [LizardByte/Sunshine](https://github.com/LizardByte/Sunshine) |
 | **logabell/Vibepollo** | Source of the **microphone passthrough** host implementation used in this fork | [logabell/Vibepollo](https://github.com/logabell/Vibepollo) |
-| **logabell/moonlight-qt-mic** | **Paired Android client** used with this fork (mic passthrough on the phone) | [logabell/moonlight-qt-mic](https://github.com/logabell/moonlight-qt-mic) |
-| **Artemis / Moonlight Noir** | Related Android client ecosystem with mic support | [ClassicOldSong/moonlight-android](https://github.com/ClassicOldSong/moonlight-android) |
+| **logabell/moonlight-qt-mic** | **Required paired Android TV client** for this fork's mic feature | [logabell/moonlight-qt-mic](https://github.com/logabell/moonlight-qt-mic) |
 | **Moonlight** | Client protocol lineage | [moonlight-stream/moonlight](https://github.com/moonlight-stream/moonlight) |
 
 This fork is **not** affiliated with, endorsed by, or maintained by Nonary, LizardByte, logabell, or the Moonlight project unless they say otherwise.
