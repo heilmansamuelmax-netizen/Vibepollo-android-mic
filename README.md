@@ -16,6 +16,8 @@ Enable **`stream_mic`** in Audio/Video settings, install Steam Streaming Microph
 
 Install the client APK from logabell’s releases (or build from source), pair to this host like normal Moonlight, and enable microphone in the client when streaming.
 
+**NVIDIA Shield TV Pro (2019):** USB wireless headsets are the practical choice; Bluetooth mic on Shield may not work, and Bluetooth audio quality is generally poor anyway—see [remote_microphone.md](docs/remote_microphone.md#nvidia-shield-android-tv-client).
+
 ## Quick links (this fork)
 
 | Doc | Purpose |

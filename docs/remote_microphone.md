@@ -60,6 +60,16 @@ Quick sanity check before Discord:
 
 If Voice Recorder works but Discord does not, Discord’s input device is wrong. If Voice Recorder is flat, the host path (drivers, `stream_mic`, or client encryption) is still broken.
 
+## NVIDIA Shield (Android TV client)
+
+A working client setup in this fork’s lineage pairs the host with **[logabell/moonlight-qt-mic](https://github.com/logabell/moonlight-qt-mic)** on the client—for example a **2019 NVIDIA Shield TV Pro** with a **USB wireless headset** (dongle or base connected to the Shield’s USB port).
+
+- **USB wireless headset (recommended):** Let Android TV see the headset as the recording device. The wireless link is between the headset and its USB dongle; the Shield only needs to capture from that USB audio device.
+- **Bluetooth headset:** Mic passthrough **may not work** on Shield over Bluetooth—Android TV and many BT headsets do not expose a reliable mic path to sideloaded streaming apps. This fork does not fix Shield-side Bluetooth routing.
+- **Why USB over BT anyway:** Bluetooth audio on Shield is often **low quality** (narrow codec, latency, dropouts) for both playback and capture. A USB wireless headset is usually the better choice for voice chat even when BT “works.”
+
+The host side is unchanged: `stream_mic` on the PC, then **Microphone (Steam Streaming Microphone)** in Discord, Steam, or games.
+
 ## Configuration Notes
 
 - `stream_mic` enables the host microphone redirect path.
