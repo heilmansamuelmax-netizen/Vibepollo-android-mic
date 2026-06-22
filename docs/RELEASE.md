@@ -1,8 +1,8 @@
 # Releases (Windows installer)
 
-Pre-built **full installers** for this fork: **[GitHub Releases](https://github.com/heilmansamuelmax-netizen/Vibepollo-android-mic/releases)**.
+Download **`VibepolloSetup.exe`** from **[GitHub Releases](https://github.com/heilmansamuelmax-netizen/Vibepollo-android-mic/releases)**.
 
-Download **`VibepolloSetup.exe`** — same style of install as official Apollo/Vibepollo (service, virtual display, web UI, Playnite). This fork adds **Android/client microphone passthrough** on top of Vibepollo 1.17.0-beta.8.
+Full Vibepollo host installer with **Android/client microphone passthrough** on top of Vibepollo 1.17.0-beta.8 (service, virtual display, web UI, Playnite).
 
 ## Download
 
@@ -16,7 +16,7 @@ Download **`VibepolloSetup.exe`** — same style of install as official Apollo/V
 |-----------|------|
 | **Android TV client** | **[logabell/moonlight-qt-mic](https://github.com/logabell/moonlight-qt-mic)** (required) |
 
-Artemis, stock Moonlight, and other forks are **not** the supported client for this mic release.
+Artemis, stock Moonlight, and other forks are **not** supported for mic passthrough with this build.
 
 **Tested hardware:** **2019 NVIDIA Shield TV Pro** only. Other Android TV devices are untested.
 
@@ -28,17 +28,7 @@ Artemis, stock Moonlight, and other forks are **not** the supported client for t
 4. Install **moonlight-qt-mic** on the Shield, pair, and enable microphone when streaming.
 5. On the host, select **Microphone (Steam Streaming Microphone)** in Discord/games.
 
-USB wireless headsets are recommended on Shield; see [remote_microphone.md](remote_microphone.md#nvidia-shield-android-tv-client).
-
-## Choose your host (full install)
-
-| Host | When to use |
-|------|-------------|
-| [ClassicOldSong/Apollo](https://github.com/ClassicOldSong/Apollo) | Official Apollo; no fork mic feature. |
-| [Nonary/Vibepollo](https://github.com/Nonary/Vibepollo) | Official signed Vibepollo releases. |
-| **This fork** | You want **mic passthrough** with **moonlight-qt-mic** on Android TV. |
-
-Install **one** host at a time. This installer upgrades/replaces conflicting Sunshine/Apollo/Vibepollo installs like upstream.
+USB wireless headsets are recommended on Shield; see [remote_microphone.md](remote_microphone.md#nvidia-shield-tv-pro-2019-tested-client-setup).
 
 ## Build your own
 

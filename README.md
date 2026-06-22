@@ -2,8 +2,7 @@
 
 > **This repository:** [heilmansamuelmax-netizen/Vibepollo-android-mic](https://github.com/heilmansamuelmax-netizen/Vibepollo-android-mic)  
 > **Maintainer:** Samuel Heilman — auto mechanic, not a software engineer.  
-> **What this is:** An **optional full host installer** — same class of install as official Apollo or Vibepollo, not a patch. Pick **one** host; see [RELEASE.md](docs/RELEASE.md#choose-your-host-full-install).  
-> **Extra vs stock Vibepollo:** **Android/client microphone passthrough** (from [logabell/Vibepollo](https://github.com/logabell/Vibepollo)).  
+> **What this is:** A full Windows host installer with **Android/client microphone passthrough** (from [logabell/Vibepollo](https://github.com/logabell/Vibepollo)). Download **`VibepolloSetup.exe`** from [Releases](https://github.com/heilmansamuelmax-netizen/Vibepollo-android-mic/releases).  
 > **How it was made:** AI-assisted development in **[Cursor](https://cursor.com)**. See [docs/FORK_ATTRIBUTION.md](docs/FORK_ATTRIBUTION.md), [docs/MIC_PORT.md](docs/MIC_PORT.md), [docs/remote_microphone.md](docs/remote_microphone.md), [docs/BUILD_INSTALLER.md](docs/BUILD_INSTALLER.md).
 
 Enable **`stream_mic`** in Audio/Video settings, install Steam Streaming Microphone drivers, and pair with **[logabell/moonlight-qt-mic](https://github.com/logabell/moonlight-qt-mic)** on your Android TV client. Host apps should use **Microphone (Steam Streaming Microphone)** as input.
@@ -11,13 +10,9 @@ Enable **`stream_mic`** in Audio/Video settings, install Steam Streaming Microph
 > **Required client:** [logabell/moonlight-qt-mic](https://github.com/logabell/moonlight-qt-mic) on Android TV — not Artemis / stock Moonlight.  
 > **Tested hardware:** **2019 NVIDIA Shield TV Pro** only. Other Android TV devices or clients are untested.
 
-## Choose your install
+## Download
 
-| Host | Link |
-|------|------|
-| Official Apollo | [ClassicOldSong/Apollo](https://github.com/ClassicOldSong/Apollo) |
-| Official Vibepollo (signed) | [Nonary/Vibepollo](https://github.com/Nonary/Vibepollo) |
-| **This fork (full `VibepolloSetup.exe`)** | [Releases](https://github.com/heilmansamuelmax-netizen/Vibepollo-android-mic/releases) — mic passthrough |
+Get **`VibepolloSetup.exe`** from **[GitHub Releases](https://github.com/heilmansamuelmax-netizen/Vibepollo-android-mic/releases)** and run as Administrator. See [RELEASE.md](docs/RELEASE.md) for setup steps.
 
 ## Paired Android client (required)
 
@@ -38,7 +33,7 @@ Install the **moonlight-qt-mic** APK from [logabell’s releases](https://github
 | [MIC_PORT.md](docs/MIC_PORT.md) | What changed in the mic port |
 | [remote_microphone.md](docs/remote_microphone.md) | How to use remote mic |
 | [BUILD_INSTALLER.md](docs/BUILD_INSTALLER.md) | Build MSI + `VibepolloSetup.exe` like upstream |
-| [RELEASE.md](docs/RELEASE.md) | **Choose Apollo vs Vibepollo vs this fork**; download full `VibepolloSetup.exe` |
+| [RELEASE.md](docs/RELEASE.md) | Download and install `VibepolloSetup.exe` |
 | [RELEASE_NOTES_TEMPLATE.md](docs/RELEASE_NOTES_TEMPLATE.md) | Paste-ready GitHub release description |
 
 ## Build this fork (Windows installer)
