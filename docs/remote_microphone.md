@@ -4,9 +4,11 @@ This fork adds a working host-side remote microphone path for Vibepollo, focused
 
 ## Overview
 
+**Paired client:** [logabell/moonlight-qt-mic](https://github.com/logabell/moonlight-qt-mic) (Android Moonlight fork with microphone passthrough). This host fork does not change the client—you need a mic-capable client like that one.
+
 The microphone path is:
 
-1. A compatible Moonlight/Artemis client captures local microphone audio.
+1. The paired Android client captures local microphone audio.
 2. The client sends **encrypted** microphone packets to Vibepollo on the dedicated microphone stream.
 3. Vibepollo receives the packets, decrypts them when needed, and decodes the Opus frames on the host.
 4. Vibepollo renders the decoded PCM into the Steam playback endpoint `Speakers (Steam Streaming Microphone)`.
@@ -40,7 +42,7 @@ The working implementation in this fork includes:
   - **Speakers (Steam Streaming Microphone)** — where Vibepollo *writes* decoded phone audio
   - **Microphone (Steam Streaming Microphone)** — what Discord, Steam, games, etc. must *record from*
 - Enable `stream_mic` in Vibepollo.
-- Use a client build that supports host microphone redirection (Artemis / mic-capable Moonlight fork).
+- Install and pair **[logabell/moonlight-qt-mic](https://github.com/logabell/moonlight-qt-mic)** on Android (or another client that sends encrypted mic packets the same way).
 
 ### Discord, Steam, and games
 
